@@ -12,12 +12,7 @@ class bubleSort extends sort implements sortAlgorithms
         $this->Algorithm($array, $arrayLarge, $performance);
     }
 
-    private function swap(&$a, &$b)
-    {
-        $temp = $a;
-        $a = $b;
-        $b = $temp;
-    }
+
 
     private function Algorithm( &$array, &$arrayLarge, &$performance)
     {

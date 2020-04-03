@@ -7,7 +7,16 @@ function register($class){
 
 spl_autoload_register('register');
 
-$test = new \core\helpAlgorithms\Sorts\Test\testAlgorithms(100);
-$test->Test(1000);
-print_r($test->Avarage());
+//$sort = new sort();
+//$sort->SetRandomArray(100);
+//$sort->CombSort();
+//print_r($sort->getSortedArray());
 
+//$test = new \core\helpAlgorithms\Sorts\Test\testAlgorithms(1000);
+//$test->SetSorType(3);
+//$test->Test(5000);
+//echo $test->Avarage();
+//
+$test = new \core\helpAlgorithms\Sorts\Test\testAlgorithms();
+$test->Demo(1100, 10);
+$test->Analize();
