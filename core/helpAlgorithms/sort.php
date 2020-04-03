@@ -5,6 +5,8 @@ namespace core\helpAlgorithms;
 
 
 use core\helpAlgorithms\Sorts\bubleSort;
+use core\helpAlgorithms\Sorts\combSort;
+use core\helpAlgorithms\Sorts\shakerSort;
 
 class sort
 {
@@ -47,8 +49,17 @@ class sort
 
     public function BubleSort()
     {
-        new bubleSort($this->sortedArray, $this->arrayLarge, $this->performance );
+        new bubleSort($this->sortedArray, $this->arrayLarge, $this->performance);
     }
+    public function ShakerSort()
+    {
+        new shakerSort($this->sortedArray, $this->arrayLarge, $this->performance);
+    }
+    public function CombSort()
+    {
+        new combSort($this->sortedArray, $this->arrayLarge, $this->performance);
+    }
+
 
     public function GetArray()
     {
@@ -61,4 +72,10 @@ class sort
         unset($this->sortedArray);
     }
 
+    protected function swap(&$a, &$b)
+    {
+        $temp = $a;
+        $a = $b;
+        $b = $temp;
+    }
 }
