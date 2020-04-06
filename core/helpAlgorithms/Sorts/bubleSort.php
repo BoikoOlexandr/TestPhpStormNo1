@@ -7,9 +7,10 @@ use core\helpAlgorithms\sort;
 class bubleSort extends sort implements sortAlgorithms
 {
 
-        public  $performancePointer;
-        private $arrayPointer;
-        private $arrayLagePointer;
+    //указатели на переменные родительского класса
+    public  $performancePointer;
+    private $arrayPointer;
+    private $arrayLagePointer;
     public function __construct(&$array, &$arrayLarge, &$performance)
     {
         $this->performancePointer = &$performance;
@@ -17,14 +18,19 @@ class bubleSort extends sort implements sortAlgorithms
         $this->arrayPointer = &$array;
         $this->arrayLagePointer = &$arrayLarge;
     }
-
+    //исполняемая функция
     public function Run()
     {
         $this->Algorithm($this->arrayPointer, $this->arrayLagePointer, $this->performancePointer);
     }
-
-
-    public function Algorithm( &$array, &$arrayLarge, &$performance)
+    /**
+     * суть алгоритма:
+     * слева на право по парно сравниваются элементы,
+     * если не соответствуют условию меняются местами
+     * при достижении конца масива начинает с начала
+     * условие выхода за проход не было замен
+     */
+    public function Algorithm(&$array, &$arrayLarge, &$performance)
     {
         if(!isset($array)) {
             echo "Array is not set";

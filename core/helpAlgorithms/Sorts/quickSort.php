@@ -23,10 +23,8 @@ class quickSort extends sort implements sortAlgorithms
     {
         $this->Algorithm($this->arrayPointer, $this->arrayLagePointer, $this->performancePointer);
     }
-
-
-
     /**
+     * подготовительная часть
      * выбираеться элемент посередине и сортируется относительно него далее рекурсивно до конца
      * @param $array . исходный масив
      * @param $arrayLarge . размер исходного масива
@@ -40,16 +38,20 @@ class quickSort extends sort implements sortAlgorithms
             echo 'This is not a array';
             return false;
         }
-
         $left = 0;
         $right = $arrayLarge - 1;
-
         $this->QuickSortAlgorithm($performance, $array, $left, $right);
-
-
         return true;
     }
-
+    /**
+     * Основной алгоритм
+     * выбор опорного элемента
+     * пропуск элементов  с лева которые меньше опорного с права которые больше "сужение границ"
+     * замена элементов после предидущего шага
+     * далее по циклу пока граници не пересекутся
+     * выбор новых границ для "левых" и "правых" подмасивов
+     * запуск реурсивно
+     */
     public function QuickSortAlgorithm(&$performance, &$array, $left, $right)
     {
        $performance+=1;
@@ -91,8 +93,6 @@ class quickSort extends sort implements sortAlgorithms
 
     }
 
-
-
     public function FindMiddle(&$array, $start, $end)
     {
         $res[1] = $array[$start];
@@ -105,9 +105,7 @@ class quickSort extends sort implements sortAlgorithms
        $res[2] = abs($sum - $res[2]);
        $res[3] = abs($sum - $res[3]);
        $min = 1;
-
        if($res[2] <= $res[$min])$min = 2;
-
        if($res[3] < $res[$min]) $min = 3;
        if($min == 1)return $start;
        if($min == 2)return round(($end+$start)/2)-1;

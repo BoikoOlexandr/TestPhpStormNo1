@@ -8,40 +8,52 @@ use core\helpAlgorithms\sort;
 
 class testAlgorithms
 {
-    private $sortType;
-    private $sort;
-    private $arraySize;
-    private $sortPerformanseArray;
-    private $testResolt;
+    //тип сортировки=название класса
+    private string $sortType;
+    //эекземпляр класса
+    private sort $sort;
+    //количество элементов тестового массива
+    private int $arraySize;
+    //масив с "качеством" сортировки в каждом из тестов
+    private array $sortPerformanseArray;
+    //среднее значение верхнего массива
+    private float $testResoult;
+
     public function __construct($arraySize = 100)
     {
-        $this->sortType = 'BubleSort';
         $this->arraySize = $arraySize;
         $this -> sort = new sort();
 
     }
+
     public function SetSorType($num)
     {
         $list = $this->sort->GetSortList();
         $this->sortType =  $list[$num];
     }
+
+    public function GetSortPerformanseArray()
+    {
+        return $this->sortPerformanseArray;
+    }
+    /**
+     * также передается количество элементов случайного массива
+     * @param $countOfTests количество тестов
+     */
     public function Test($countOfTests)
     {
         for($i = 0; $i < $countOfTests; $i+=1)
         {
 
             $this->sort->SetRandomArray($this->arraySize);
-
-           $Alg = $this->sort->GetSort($this->sortType);
-            $Alg->Run();
+            $this->sort->GetSort($this->sortType)->Run();
             $this->sortPerformanseArray[$i] = $this->sort->GetPerformance();
             $this->sort->unsetArrays();
         }
     }
-    public function GetSortPerformanseArray()
-    {
-        return $this->sortPerformanseArray;
-    }
+
+
+
     public function Avarage()
     {
         $sum = 0;
@@ -51,6 +63,11 @@ class testAlgorithms
         }
         return $sum / count($this->sortPerformanseArray);
     }
+    /**
+     * Тесты по всем алгоритмам
+     * @param int $arraySize
+     * @param int $countOfTests
+     */
     public function Demo($arraySize = 100, $countOfTests = 1000){
         $this->arraySize = $arraySize;
         $sortNames = $this->sort->GetSortList();
@@ -60,15 +77,16 @@ class testAlgorithms
 
             $this->Test($countOfTests);
 
-            $this->testResolt[$i] = $this->Avarage();
+            $this->testResoult[$i] = $this->Avarage();
             print_r($sortNames[$i]."\t--->\t".$this->Avarage());
             echo "\n";
         }
     }
+    //относительные значения от пузырькоой сортиовки
     public function Analize()
     {
-        $zero = $this->testResolt[0];
-        foreach ($this->testResolt as $item)
+        $zero = $this->testResoult[0];
+        foreach ($this->testResoult as $item)
         {
             echo $zero/$item."\n";
         }
