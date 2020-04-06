@@ -6,6 +6,13 @@ function register($class){
 }
 
 spl_autoload_register('register');
+
+
+
+
+
+
+
 ////
 //$sort = new sort();
 //$sort->SetRandomArray(20);
