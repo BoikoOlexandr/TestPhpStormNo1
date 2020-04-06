@@ -9,13 +9,21 @@ use core\helpAlgorithms\sort;
 class shakerSort extends sort implements sortAlgorithms
 {
     //Как пузырьком только в разные стороны
+    public  $performancePointer;
+    private $arrayPointer;
+    private $arrayLagePointer;
     public function __construct(&$array, &$arrayLarge, &$performance)
     {
+        $this->performancePointer = &$performance;
         $performance = 0;
-        $this->Algorithm($array, $arrayLarge, $performance);
+        $this->arrayPointer = &$array;
+        $this->arrayLagePointer = &$arrayLarge;
     }
 
-
+    public function Run()
+    {
+        $this->Algorithm($this->arrayPointer, $this->arrayLagePointer, $this->performancePointer);
+    }
 
     public function Algorithm(&$array, &$arrayLarge, &$performance)
     {

@@ -6,12 +6,22 @@ use core\helpAlgorithms\sort;
 
 class bubleSort extends sort implements sortAlgorithms
 {
+
+        public  $performancePointer;
+        private $arrayPointer;
+        private $arrayLagePointer;
     public function __construct(&$array, &$arrayLarge, &$performance)
     {
+        $this->performancePointer = &$performance;
         $performance = 0;
-        $this->Algorithm($array, $arrayLarge, $performance);
+        $this->arrayPointer = &$array;
+        $this->arrayLagePointer = &$arrayLarge;
     }
 
+    public function Run()
+    {
+        $this->Algorithm($this->arrayPointer, $this->arrayLagePointer, $this->performancePointer);
+    }
 
 
     public function Algorithm( &$array, &$arrayLarge, &$performance)
@@ -39,6 +49,7 @@ class bubleSort extends sort implements sortAlgorithms
                 $nextLap = false;
             }
         }
+
         return true;
     }
 }

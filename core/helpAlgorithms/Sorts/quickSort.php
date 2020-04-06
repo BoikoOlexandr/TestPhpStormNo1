@@ -8,12 +8,20 @@ use core\helpAlgorithms\sort;
 
 class quickSort extends sort implements sortAlgorithms
 {
-    private $debugCount = 10;
-
+    public  $performancePointer;
+    private $arrayPointer;
+    private $arrayLagePointer;
     public function __construct(&$array, &$arrayLarge, &$performance)
     {
+        $this->performancePointer = &$performance;
         $performance = 0;
-        $this->Algorithm($array, $arrayLarge, $performance);
+        $this->arrayPointer = &$array;
+        $this->arrayLagePointer = &$arrayLarge;
+    }
+
+    public function Run()
+    {
+        $this->Algorithm($this->arrayPointer, $this->arrayLagePointer, $this->performancePointer);
     }
 
 
@@ -85,8 +93,6 @@ class quickSort extends sort implements sortAlgorithms
 
     public function FindMiddle(&$array, $start, $end)
     {
-
-
         $res[1] = $array[$start];
         $res[2] = $array[round(($end+$start)/2)];
         $res[3] = $array[$end];
@@ -104,7 +110,6 @@ class quickSort extends sort implements sortAlgorithms
        if($min == 1)return $start;
        if($min == 2)return round(($end+$start)/2)-1;
        if($min == 3)return $end;
-
     }
 
 }

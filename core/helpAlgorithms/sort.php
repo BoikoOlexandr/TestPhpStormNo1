@@ -11,6 +11,7 @@ use core\helpAlgorithms\Sorts\shakerSort;
 
 class sort
 {
+    protected array $sortContainer;
     protected array $array;
     protected int $arrayLarge;
     protected array $sortedArray;
@@ -32,6 +33,7 @@ class sort
         $this->array = $array;
         $this->sortedArray = $this->array;
         $this->arrayLarge = count($array);
+        $this->InitializeSortAlgorithms();
     }
 
     public function SetRandomArray($large, $min = 0, $max = 100)
@@ -42,6 +44,7 @@ class sort
                 $this->array[$i] = rand($min, $max);
 
             $this->sortedArray = $this->array;
+            $this->InitializeSortAlgorithms();
             return true;
         }
         else{
@@ -51,8 +54,47 @@ class sort
 
     public function InitializeSortAlgorithms()
     {
-        $this->GetSortList();
+        foreach($this->GetSortList() as $className)
+        {
+            $fullClassName = 'core\helpAlgorithms\Sorts\\'.$className;
+            $class = new $fullClassName($this->sortedArray, $this->arrayLarge, $this->performance);
+            $this->SetSortContainer($className, $class);
+        }
     }
+
+    private function SetSortContainer($name, $class)
+    {
+        $this->sortContainer[$name] = $class;
+    }
+
+    public function GetSort($className)
+    {
+        $algorithmName = $this->PtotectAlgorithmName($className);
+        return $this->sortContainer[$algorithmName];
+    }
+
+    private function PtotectAlgorithmName(string $className)
+    {
+        $classList = $this->GetSortList();
+        $found = false;
+        foreach ($classList as $item)
+        {
+            $pattern = '/'.$className.'/i';
+            if(preg_match($pattern,$item)){
+                if(!$found){
+                    $found = true;
+                    $resolt = $item;
+                }
+                else {
+                    echo 'Не правильное имя сортировки';
+                    exit();
+                }
+            }
+        }
+        echo $resolt;
+        return $resolt;
+    }
+
 
     private function GetSortList(){
         $temp = scandir(__DIR__.'/Sorts');
