@@ -3,16 +3,22 @@
 
 namespace core\helpAlgorithms;
 
-
 use core\helpAlgorithms\Sorts\bubleSort;
 use core\helpAlgorithms\Sorts\combSort;
+use core\helpAlgorithms\Sorts\quickSort;
 use core\helpAlgorithms\Sorts\shakerSort;
 
 class sort
 {
+    //Контейнер всех алгоритмов сортировки
+    protected array $sortContainer;
+    //Исходный массив не обрабатывается
     protected array $array;
-    protected int $arrayLarge;
+    //количество элементов массива передается по ссылке
+    protected int $arraySize;
+    //"сортированый массив" копия масива передается по ссылке
     protected array $sortedArray;
+    //"качество" алгоритмов сортировки передается по ссылке
     protected int $performance = 0;
 
     public function getSortedArray()
@@ -29,17 +35,51 @@ class sort
     {
         $this->array = $array;
         $this->sortedArray = $this->array;
-        $this->arrayLarge = count($array);
+        $this->arraySize = count($array);
+        $this->InitializeSortAlgorithms();
+    }
+
+    public function GetArray()
+    {
+        return $this->array;
+    }
+
+    public function GetSort($className)
+    {
+        $algorithmName = $this->PtotectAlgorithmName($className);
+        return $this->sortContainer[$algorithmName];
+    }
+
+    public function GetSortList(){
+        $temp = scandir(__DIR__.'/Sorts');
+        $i = 0;
+        foreach ($temp as $item)
+        {
+            if(
+            preg_match('/([\w]+)(.php)$/',$item)
+            )
+            {
+                if(is_file(__DIR__.'/Sorts/'.$item)) {
+                    $item = preg_replace('/(\.php)/', '', $item);
+                    if ($item != 'sortAlgorithms') {
+                        $sortList[$i] = $item;
+                        $i++;
+                    }
+                }
+            }
+        }
+        return $sortList;
     }
 
     public function SetRandomArray($large, $min = 0, $max = 100)
     {
-        $this->arrayLarge = $large;
+        $this->arraySize = $large;
         if(!isset($this->array)) {
             for ($i = 0; $i < $large; $i += 1)
                 $this->array[$i] = rand($min, $max);
 
             $this->sortedArray = $this->array;
+            $this->InitializeSortAlgorithms();
             return true;
         }
         else{
@@ -47,31 +87,48 @@ class sort
         }
     }
 
-    public function BubleSort()
+    private function SetSortContainer($name, $class)
     {
-        new bubleSort($this->sortedArray, $this->arrayLarge, $this->performance);
+        $this->sortContainer[$name] = $class;
     }
-    public function ShakerSort()
+    //Создание контейнера
+    public function InitializeSortAlgorithms()
     {
-        new shakerSort($this->sortedArray, $this->arrayLarge, $this->performance);
+        foreach($this->GetSortList() as $className)
+        {
+            $fullClassName = 'core\helpAlgorithms\Sorts\\'.$className;
+            $class = new $fullClassName($this->sortedArray, $this->arraySize, $this->performance);
+            $this->SetSortContainer($className, $class);
+        }
     }
-    public function CombSort()
+    //"упрощенное" записывние названий сортировок
+    private function PtotectAlgorithmName(string $className)
     {
-        new combSort($this->sortedArray, $this->arrayLarge, $this->performance);
+        $classList = $this->GetSortList();
+        $found = false;
+        foreach ($classList as $item)
+        {
+            $pattern = '/'.$className.'/i';
+            if(preg_match($pattern,$item)){
+                if(!$found){
+                    $found = true;
+                    $resolt = $item;
+                }
+                else {
+                    echo 'Не правильное имя сортировки';
+                    exit();
+                }
+            }
+        }
+        return $resolt;
     }
-
-
-    public function GetArray()
-    {
-        return $this->array;
-    }
-
+    //очистка масивов
     public function unsetArrays()
     {
         unset($this->array);
         unset($this->sortedArray);
     }
-
+    //замена элементов обычно Масива для дочерних классов
     protected function swap(&$a, &$b)
     {
         $temp = $a;

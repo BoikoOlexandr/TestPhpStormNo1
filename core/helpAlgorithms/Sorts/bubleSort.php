@@ -6,15 +6,31 @@ use core\helpAlgorithms\sort;
 
 class bubleSort extends sort implements sortAlgorithms
 {
+
+    //указатели на переменные родительского класса
+    public  $performancePointer;
+    private $arrayPointer;
+    private $arrayLagePointer;
     public function __construct(&$array, &$arrayLarge, &$performance)
     {
+        $this->performancePointer = &$performance;
         $performance = 0;
-        $this->Algorithm($array, $arrayLarge, $performance);
+        $this->arrayPointer = &$array;
+        $this->arrayLagePointer = &$arrayLarge;
     }
-
-
-
-    private function Algorithm( &$array, &$arrayLarge, &$performance)
+    //исполняемая функция
+    public function Run()
+    {
+        $this->Algorithm($this->arrayPointer, $this->arrayLagePointer, $this->performancePointer);
+    }
+    /**
+     * суть алгоритма:
+     * слева на право по парно сравниваются элементы,
+     * если не соответствуют условию меняются местами
+     * при достижении конца масива начинает с начала
+     * условие выхода за проход не было замен
+     */
+    public function Algorithm(&$array, &$arrayLarge, &$performance)
     {
         if(!isset($array)) {
             echo "Array is not set";
@@ -39,6 +55,7 @@ class bubleSort extends sort implements sortAlgorithms
                 $nextLap = false;
             }
         }
+
         return true;
     }
 }

@@ -8,13 +8,25 @@ use core\helpAlgorithms\sort;
 
 class combSort extends sort implements sortAlgorithms
 {
-
+    public  $performancePointer;
+    private $arrayPointer;
+    private $arrayLagePointer;
     public function __construct(&$array, &$arrayLarge, &$performance)
     {
+        $this->performancePointer = &$performance;
         $performance = 0;
-        $this->Algorithm($array, $arrayLarge, $performance);
+        $this->arrayPointer = &$array;
+        $this->arrayLagePointer = &$arrayLarge;
     }
 
+    public function Run()
+    {
+        $this->Algorithm($this->arrayPointer, $this->arrayLagePointer, $this->performancePointer);
+    }
+    //похожа на Пузырьковую но проверяються и меняються не соседнии элементы а элементы с разницой в буфер
+    /**
+     * проход заканчивается по достижению ПРАВОГО элемента конца массива
+     */
     public function Algorithm(&$array, &$arrayLarge, &$performance)
     {
         if(!is_array($array) || !isset($array))return false;
