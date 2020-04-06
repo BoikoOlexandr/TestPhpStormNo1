@@ -14,7 +14,7 @@ class bubleSort extends sort implements sortAlgorithms
 
 
 
-    private function Algorithm( &$array, &$arrayLarge, &$performance)
+    public function Algorithm( &$array, &$arrayLarge, &$performance)
     {
         if(!isset($array)) {
             echo "Array is not set";

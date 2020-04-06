@@ -6,6 +6,7 @@ namespace core\helpAlgorithms;
 
 use core\helpAlgorithms\Sorts\bubleSort;
 use core\helpAlgorithms\Sorts\combSort;
+use core\helpAlgorithms\Sorts\quickSort;
 use core\helpAlgorithms\Sorts\shakerSort;
 
 class sort
@@ -19,6 +20,7 @@ class sort
     {
         return $this->sortedArray;
     }
+
 
     public function GetPerformance()
     {
@@ -47,6 +49,30 @@ class sort
         }
     }
 
+    public function InitializeSortAlgorithms()
+    {
+        $this->GetSortList();
+    }
+
+    private function GetSortList(){
+        $temp = scandir(__DIR__.'/Sorts');
+        $i = 0;
+        foreach ($temp as $item)
+        {
+            if(
+                preg_match('/([\w]+)(.php)$/',$item)
+            )
+            {
+                $item =  preg_replace('/(\.php)/','',$item);
+                if($item != 'sortAlgorithms') {
+                    $sortList[$i] = $item;
+                    $i++;
+                }
+            }
+        }
+        return $sortList;
+    }
+
     public function BubleSort()
     {
         new bubleSort($this->sortedArray, $this->arrayLarge, $this->performance);
@@ -58,6 +84,10 @@ class sort
     public function CombSort()
     {
         new combSort($this->sortedArray, $this->arrayLarge, $this->performance);
+    }
+    public function QuickSort()
+    {
+        new quickSort($this->sortedArray, $this->arrayLarge, $this->performance);
     }
 
 

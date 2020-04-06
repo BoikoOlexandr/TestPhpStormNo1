@@ -1,7 +1,7 @@
 <?php
 
 
-namespace core\helpAlgorithms\Sorts\Test;
+namespace core\helpAlgorithms\Test;
 
 
 use core\helpAlgorithms\sort;

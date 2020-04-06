@@ -15,6 +15,15 @@ class combSort extends sort implements sortAlgorithms
         $this->Algorithm($array, $arrayLarge, $performance);
     }
 
+
+    //похожа на Пузырьковую но проверяються и меняються не соседнии элементы а элементы с разницой в буфер
+
+    /**
+     * @param $array . исходный масив
+     * @param $arrayLarge . размер исходного масива
+     * @param $performance .  каество алгоритма
+     * @return bool
+     */
     public function Algorithm(&$array, &$arrayLarge, &$performance)
     {
         if(!is_array($array) || !isset($array))return false;
