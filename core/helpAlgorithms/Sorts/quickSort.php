@@ -59,6 +59,7 @@ class quickSort extends sort implements sortAlgorithms
         $middle = $array[$middleElement];
         do
         {
+            $performance+=1;
             while($array[$localLeft] < $middle)
             {
                 $localLeft++;
@@ -71,6 +72,7 @@ class quickSort extends sort implements sortAlgorithms
 
             if($localLeft <= $localRight)
             {
+                $performance+=1;
                 $this->swap($array[$localLeft],$array[$localRight]);
                 $localLeft++;
                 $localRight--;

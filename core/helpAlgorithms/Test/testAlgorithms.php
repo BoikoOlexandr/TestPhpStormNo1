@@ -22,19 +22,18 @@ class testAlgorithms
     }
     public function SetSorType($num)
     {
-        switch ($num) {
-            case 1: $this->sortType = 'BubleSort';break;
-            case 2: $this->sortType = 'ShakerSort';break;
-            case 3: $this->sortType = 'CombSort';break;
-            default: echo "just 1,2 or 3"; exit();
-        }
+        $list = $this->sort->GetSortList();
+        $this->sortType =  $list[$num];
     }
     public function Test($countOfTests)
     {
         for($i = 0; $i < $countOfTests; $i+=1)
         {
+
             $this->sort->SetRandomArray($this->arraySize);
-            $this->sort->{$this->sortType}();
+
+           $Alg = $this->sort->GetSort($this->sortType);
+            $Alg->Run();
             $this->sortPerformanseArray[$i] = $this->sort->GetPerformance();
             $this->sort->unsetArrays();
         }
@@ -54,18 +53,21 @@ class testAlgorithms
     }
     public function Demo($arraySize = 100, $countOfTests = 1000){
         $this->arraySize = $arraySize;
-        for($i = 1; $i <= 3; $i += 1)
+        $sortNames = $this->sort->GetSortList();
+        for($i = 0; $i < count($sortNames); $i += 1)
         {
             $this->SetSorType($i);
+
             $this->Test($countOfTests);
+
             $this->testResolt[$i] = $this->Avarage();
-            print_r($this->sortType."\t--->\t".$this->Avarage());
+            print_r($sortNames[$i]."\t--->\t".$this->Avarage());
             echo "\n";
         }
     }
     public function Analize()
     {
-        $zero = $this->testResolt[1];
+        $zero = $this->testResolt[0];
         foreach ($this->testResolt as $item)
         {
             echo $zero/$item."\n";

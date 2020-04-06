@@ -91,12 +91,11 @@ class sort
                 }
             }
         }
-        echo $resolt;
         return $resolt;
     }
 
 
-    private function GetSortList(){
+    public function GetSortList(){
         $temp = scandir(__DIR__.'/Sorts');
         $i = 0;
         foreach ($temp as $item)
