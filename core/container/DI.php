@@ -4,11 +4,13 @@
 namespace core\container;
 
 
+use core\helpAlgorithms\directoryHelper;
+
 class DI
 {
     //переменная контейнер в которой будут хранится все другие переменные
     //далее гетер и сетер для нее!
-    private array $container;
+    private array $container = [];
 
     public function Set($key, $value)
     {
@@ -31,4 +33,15 @@ class DI
             return false;
         }
     }
+
+    public function InitDependeces()
+    {
+        $list = directoryHelper::GetClassList("\core\components".DIRECTORY_SEPARATOR);
+        foreach($list as $item)
+        {
+            $fulclass = $item["dir"].$item["class"];
+            $this->Set($item["class"], new $fulclass());
+        }
+    }
+
 }

@@ -1,10 +1,11 @@
 <?php
 
 
-namespace core\helpAlgorithms\Sorts;
+namespace core\helpAlgorithms\Sorts\Sorts;
 
 
 use core\helpAlgorithms\sort;
+use core\helpAlgorithms\Sorts\int\sortAlgorithms;
 
 class combSort extends sort implements sortAlgorithms
 {

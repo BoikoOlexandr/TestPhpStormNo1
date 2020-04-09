@@ -3,6 +3,7 @@
 
 namespace core\helpAlgorithms\Sorts;
 use core\helpAlgorithms\sort;
+use core\helpAlgorithms\Sorts\int\sortAlgorithms;
 
 class bubleSort extends sort implements sortAlgorithms
 {

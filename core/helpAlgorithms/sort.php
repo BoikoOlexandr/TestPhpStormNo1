@@ -50,25 +50,9 @@ class sort
         return $this->sortContainer[$algorithmName];
     }
 
-    public function GetSortList(){
-        $temp = scandir(__DIR__.'/Sorts');
-        $i = 0;
-        foreach ($temp as $item)
-        {
-            if(
-            preg_match('/([\w]+)(.php)$/',$item)
-            )
-            {
-                if(is_file(__DIR__.'/Sorts/'.$item)) {
-                    $item = preg_replace('/(\.php)/', '', $item);
-                    if ($item != 'sortAlgorithms') {
-                        $sortList[$i] = $item;
-                        $i++;
-                    }
-                }
-            }
-        }
-        return $sortList;
+    public function GetSortList()
+    {
+        return directoryHelper::GetClassList('core/helpAlgorithms/Sorts/');
     }
 
     public function SetRandomArray($large, $min = 0, $max = 100)

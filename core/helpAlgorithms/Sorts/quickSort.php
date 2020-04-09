@@ -5,6 +5,7 @@ namespace core\helpAlgorithms\Sorts;
 
 
 use core\helpAlgorithms\sort;
+use core\helpAlgorithms\Sorts\int\sortAlgorithms;
 
 class quickSort extends sort implements sortAlgorithms
 {

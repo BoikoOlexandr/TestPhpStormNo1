@@ -1,7 +1,7 @@
 <?php
 
 
-namespace core\helpAlgorithms\Sorts;
+namespace core\helpAlgorithms\Sorts\int;
 
 
 interface sortAlgorithms
