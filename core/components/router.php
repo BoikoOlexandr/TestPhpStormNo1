@@ -20,15 +20,19 @@ class router
     public function Run()
     {
         $routeInit = new routeInit();
-        $this->route = $routeInit->GetRoute('/about/asd/q2/123/');
+        $this->route = $routeInit->GetRoute('/about/123/s/');
         $this->CallMethod($routeInit->getData());
     }
     private function CallMethod($data)
     {
         $fullControllerName = ds.'controller'.ds.$this->route->getController();
+        $fullControllerName = slashNamespasehReplase($fullControllerName);
         $this->controller = new $fullControllerName();
-        $this->controller->{$this->route->getMethod()}($data);
-
+        if(!empty($data)) {
+            $this->controller->{$this->route->getMethod()}($data);
+        }else{
+            $this->controller->{$this->route->getMethod()}();
+        }
     }
 
 }

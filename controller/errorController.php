@@ -6,8 +6,10 @@ namespace controller;
 
 class errorController
 {
-    public function NoRotes()
+    public function NoRotes($data)
     {
-        echo __METHOD__;
+
+        echo 'This is '.__METHOD__.' and have data ';
+        print_r($data);
     }
 }

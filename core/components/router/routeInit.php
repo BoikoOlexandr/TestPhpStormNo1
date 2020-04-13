@@ -10,7 +10,16 @@ class routeInit
 {
 
     public $container;
-    private $data = [];
+    private array $data = [];
+    private array $types = [
+        "str",
+        "int"
+    ];
+    private array $pregTypes =[
+        "str" => '/^([0-9a-zA-Z]+)$/',
+        "int" => '/^[0-9]+$/'
+    ];
+    private $index = null;
     public function __construct()
     {
         $this->InitializeRoutes();
@@ -44,6 +53,9 @@ class routeInit
                 return $item;
             }
         }
+        $this->data = [
+          "error" => $url
+        ];
         return $this->container["routerError"];
     }
 
@@ -54,13 +66,14 @@ class routeInit
 
        // exit();
         $OK = true;
+        if(count($url)!=count($rule))return false;
         for($i = 0; $i < count($url); $i++) {
             if (!isset($rule[$i])) return false;
 
             if (preg_match($this->Preg($rule[$i], $i), $url[$i])) {
-                if(isset($this->data[$i]))
+                if(isset($this->index))
                 {
-
+                    $this->data[$this->index] = $url[$i];
                 }
 
                 $OK = true;
@@ -70,22 +83,30 @@ class routeInit
         return $OK;
     }
 
-
-    //// Добавить имя переменной в {(int)} типа
-    /// {(int:name1)}
     private function Preg($rule, $i)
     {
-        if($rule == '{(int)}')
+        foreach($this->types as $type)
         {
-            $this->data[$i] = ['int'];
-            return '/^[0-9]+$/';
-        }elseif($rule == '{(str)}')
-        {
-            $this->data[$i] = ['str'];
-            return '/^([0-9a-zA-Z]+)$/';
-        }else return '/'.$rule.'/';
+            if(preg_match($this->Match($type) , $rule))
+            {
+                $this->Replace($type,$rule);
+                return $this->pregTypes[$type];
+            }
+        }
+        $this->index = null;
+        return '/' . $rule . '/';
     }
 
+    private function Match($type)
+    {
+        return"/^(\{\(".$type.":)[0-9a-zA-Z]+(\)\})$/";
+    }
+
+    private function Replace($type, $rule)
+    {
+        $this->index = preg_replace("/(\{\(".$type.":)|(\)\})/",'',$rule);
+        return 0;
+    }
 
 }
 

@@ -40,10 +40,9 @@ class DI
         foreach($list as $item)
         {
             $fulclass = $item["dir"].$item["class"];
-            $fulclass = str_replace(ds,'\\', $fulclass);
+            $fulclass = slashNamespasehReplase($fulclass);
 
             $this->Set($item["class"], new $fulclass());
         }
     }
-
 }
