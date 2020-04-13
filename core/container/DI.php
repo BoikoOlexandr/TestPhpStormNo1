@@ -36,10 +36,12 @@ class DI
 
     public function InitDependeces()
     {
-        $list = directoryHelper::GetClassList("\core\components".DIRECTORY_SEPARATOR);
+        $list = directoryHelper::GetClassList(ds."core".ds."components".DIRECTORY_SEPARATOR);
         foreach($list as $item)
         {
             $fulclass = $item["dir"].$item["class"];
+            $fulclass = str_replace(ds,'\\', $fulclass);
+
             $this->Set($item["class"], new $fulclass());
         }
     }
