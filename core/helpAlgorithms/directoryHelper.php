@@ -6,18 +6,18 @@ namespace core\helpAlgorithms;
 
 class directoryHelper
 {
-    public static function GetClassList($dir){
+    public static function GetClassList($dir, $pattern = 'php'){
         $temp = scandir(dir.$dir);
         $i = 0;
         foreach ($temp as $item)
         {
             if(
-            preg_match('/([\w]+)(.php)$/',$item)
+            preg_match('/([\w]+)(.'.$pattern.')$/',$item)
             )
             {
                 if(is_file(dir.$dir.$item)) {
-
-                    $item = preg_replace('/(\.php)/', '', $item);
+                    $pat = '/(\.'.$pattern.')/';
+                    $item = preg_replace($pat, '', $item);
                     $sortList[$i]['dir'] = $dir;
                     $sortList[$i]['class'] = $item;
                     $i++;
@@ -27,7 +27,7 @@ class directoryHelper
         if (isset($sortList)){
             return $sortList;
         }else{
-            echo "there no files in ".$dir;
+            echo "there are no files in ".$dir;
             exit();
 
         }

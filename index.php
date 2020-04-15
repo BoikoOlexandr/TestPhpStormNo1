@@ -1,10 +1,5 @@
 <?php
 
-
-
-
-
-
 use \core\helpAlgorithms\sort;
 
 define("dir", __DIR__);
@@ -12,7 +7,6 @@ define("ds", DIRECTORY_SEPARATOR);
 
 function register($class){
     $class = str_replace("\\", ds, $class);
-
    include $class.'.php';
 }
 

@@ -11,6 +11,8 @@ class DI
     //переменная контейнер в которой будут хранится все другие переменные
     //далее гетер и сетер для нее!
     private array $container = [];
+    private array $data = [];
+
 
     public function Set($key, $value)
     {
@@ -41,8 +43,24 @@ class DI
         {
             $fulclass = $item["dir"].$item["class"];
             $fulclass = slashNamespasehReplase($fulclass);
-
-            $this->Set($item["class"], new $fulclass());
+            $this->Set($item["class"], new $fulclass($this));
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function getData() :array
+    {
+        return $this->data;
+    }
+
+
+    /**
+     * @param array $data
+     */
+    public function setData($key, $value)
+    {
+        $this->data[$key] = $value;
     }
 }

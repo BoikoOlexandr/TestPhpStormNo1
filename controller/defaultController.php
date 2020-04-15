@@ -4,11 +4,26 @@
 namespace controller;
 
 
+use core\container\DI;
+
 class defaultController
 {
+    private $di;
+    private $view;
+    public array $data;
+    public function __construct($di)
+    {
+        $this->di = $di;
+        $this->data = $di->GetData();
+        $this->view = $this->di->Get('view');
+    }
+
     public function Start()
     {
-        echo 'This is '.__METHOD__.' and have data ';
+        $this->data = [
+          "test"=>"this is test",
+        ];
+        $this->view->Render('home', $this->data);
     }
     public function About()
     {
